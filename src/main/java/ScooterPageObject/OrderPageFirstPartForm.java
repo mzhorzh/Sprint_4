@@ -1,13 +1,12 @@
 package ScooterPageObject;
 
+import Core.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-public class OrderPageFirstPartForm {
+public class OrderPageFirstPartForm extends Driver {
     //Локаторы
-    private WebDriver driver;
     private final By nameField = By.xpath(".//input[@placeholder='* Имя']");
     private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
     private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
@@ -15,10 +14,6 @@ public class OrderPageFirstPartForm {
     private final By metroList = By.className("select-search__row");
     private final By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
     private final By nextButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
-
-    public OrderPageFirstPartForm(WebDriver driver){
-        this.driver = driver;
-    }
 
     //Метод проверки доступности, очиищения и ввода значения в поле "Имя"
     public void setNameValue(String name) {

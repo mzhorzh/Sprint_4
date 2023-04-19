@@ -1,15 +1,14 @@
 package ScooterPageObject;
 
+import Core.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import static org.junit.Assert.assertTrue;
 
-public class OrderPageSecondPartForm {
+public class OrderPageSecondPartForm extends Driver {
     //Локаторы
-    private WebDriver driver;
 
     private final By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
     private final By rentTimeField = By.className("Dropdown-arrow");
@@ -19,10 +18,6 @@ public class OrderPageSecondPartForm {
     private final By orderButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
     private final By modalYesButton = By.xpath(".//button[text()='Да']");
     private final By modalOrderNumberWindow = By.className("Order_Modal__YZ-d3");
-
-    public OrderPageSecondPartForm(WebDriver driver) {
-        this.driver = driver;
-    }
 
     ////Метод проверки доступности, очиищения и ввода значения в поле "Дата"
     public void setDateValue(String date) {

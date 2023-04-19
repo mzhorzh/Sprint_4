@@ -1,39 +1,32 @@
 package ScooterPageObject;
 
+import Core.Driver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.Assert.assertTrue;
 
-public class HomePage {
-    private final WebDriver driver;
-    private final By orderHeaderButton = By.xpath(".//button[@class='Button_Button__ra12g']");
-    private final By orderMiddleButton = By.xpath(".//button[@class='Button_Button__ra12g Button_Middle__1CSJM']");
+public class HomePage extends Driver {
+    private final By orderHeaderButton = By.xpath(".//button[contains(@class,'Button_Button')]");
+    private final By containerMiddleOrderButton = By.xpath(".//div[contains(@class,'Home_ThirdPart')]");
+    private final By orderMiddleButton = By.xpath(".//div[contains(@class,'Home_FinishButton')]/button[text()='Заказать']");
     private final By cookieButton = By.id("rcc-confirm-button");
     private final By accordionQuestion = By.xpath(".//div[@class='accordion__item']");
 
-    public HomePage(WebDriver driver) {
-        this.driver = driver;
-    }
-
-    //Метод нажатия на кнопку в заголовке
-    public void clickOrderHeaderButton() {
+    //Метод нажатия на кнопку "Заказать" либо в хедере, либо в середине, в зависимости от параметра
+    public void clickOrderButton(int indexOrderButton) {
+        if (indexOrderButton == 1) {
+            new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(containerMiddleOrderButton));
+            WebElement element = driver.findElement(containerMiddleOrderButton);
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+            new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(orderMiddleButton));
+            driver.findElement(orderMiddleButton).click();
+        }
+        new WebDriverWait(driver, 3).until(ExpectedConditions.visibilityOfElementLocated(orderHeaderButton));
         driver.findElement(orderHeaderButton).click();
-    }
-
-    //Метод скролла к кнопке в середине страницы
-    public void scrollOrderMiddleButton() {
-        WebElement element = driver.findElement(orderMiddleButton);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-    }
-
-    //Метод клика на кнопку в середине страницы
-    public void clickOrderMiddleButton() {
-        driver.findElement(orderMiddleButton).click();
     }
 
     //Метод скролла до списка вопросов

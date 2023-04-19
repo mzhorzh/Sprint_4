@@ -1,20 +1,18 @@
+import Core.Annotations;
 import ScooterPageObject.HomePage;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-
-import java.util.concurrent.TimeUnit;
 
 @RunWith(Parameterized.class)
-public class checkQuestionsAccordion {
+public class checkQuestionsAccordion extends Annotations {
     //Объявление переменных
     private final int index;
     private final String answerTextExpected;
-    private WebDriver driver;
 
-    //Консструктор параметров
+    //private WebDriver driver;
+
+    //Конструктор параметров
     public checkQuestionsAccordion(int index, String answerTextExpected) {
         this.index = index;
         this.answerTextExpected = answerTextExpected;
@@ -34,22 +32,13 @@ public class checkQuestionsAccordion {
                 {7, "Да, обязательно. Всем самокатов! И Москве, и Московской области."},
         };
     }
+
     @Test
     public void checkAccordion() {
-        //Устанавливаем драйвер для браузера Chrome
-        WebDriver driver = new ChromeDriver();
-        //Устанавливаем драйвер для браузера FireFox
-        //WebDriver driver = new FirefoxDriver();
-        //Загружаем главную страницу сайта
-        driver.get("https://qa-scooter.praktikum-services.ru/");
         //Создаем объект класса главной страницы
-        HomePage objHomePage = new HomePage(driver);
-        //Закрываем окно Cookie
-        objHomePage.clickCookieButton();
+        HomePage objHomePage = new HomePage();
         //Скроллим до списка вопросов
         objHomePage.scrollToAccordion();
-        //Ждем 4 секунды, чтобы страница доскроллилась
-        driver.manage().timeouts().implicitlyWait(5000, TimeUnit.MILLISECONDS);
         //Ожидаеем когда вопрос будет кликабелен
         objHomePage.waitQuestionToBeClickable();
         //Получаем и открываем номер вопроса
@@ -58,7 +47,5 @@ public class checkQuestionsAccordion {
         objHomePage.checkAccordionQuestionPanelIsDisplayed(index);
         //Сравниваем текст ответа  сожидаемым текстом
         objHomePage.checkAccordionAnswerTextMatchesExpectedText(index, answerTextExpected);
-        //Закрываем браузер
-        driver.quit();
     }
 }
